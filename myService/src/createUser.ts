@@ -9,9 +9,8 @@ module.exports.create = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
         TableName: "firstDyno", 
         Item: marshall({
             id: event.pathParameters?.userId,
-            userName: 'FirstUser',
-            age: '20',
-            job: 'hckr',
+            userName: event.pathParameters?.userName,
+            age: event.pathParameters?.age,
         })
     }; 
 

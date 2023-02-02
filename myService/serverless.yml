@@ -66,18 +66,18 @@ provider:
 #    - include-me-dir/**
 
 functions:
-  tsogtFunction:
-    handler: ./src/handler.hello
-    events:
-      - http:
-          path: /obj/{id}
-          method: get
+  # tsogtFunction:
+  #   handler: ./src/handler.hello
+  #   events:
+  #     - http:
+  #         path: /obj/{id}
+  #         method: get
 
   CreatingANewUser: 
     handler: ./src/createUser.create
     events: 
       - http:
-          path: /create/{userId}
+          path: /create/{userId}/{userName}/{age}
           method: post
   GetSpecificUser:
     handler: ./src/getUser.get
@@ -85,6 +85,13 @@ functions:
       - http:
           path: /user/{userId}
           method: get
+  UpdateAUser:
+    handler: ./src/updateUser.update
+    events:
+      - http:
+          path: /update/{id}
+          method: get
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

@@ -1,26 +1,33 @@
 import { marshall } from "@aws-sdk/util-dynamodb"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import { DynamoDBClient, GetItemCommand, PutItemCommand } from "@aws-sdk/client-dynamodb"
+import { DynamoDBClient, DynamoDB ,GetItemCommand, PutItemCommand } from "@aws-sdk/client-dynamodb"
 import { QueryCommand } from "@aws-sdk/client-dynamodb";
 
-const client = new DynamoDBClient({region: 'ap-southeast-1'}); 
-let data: any;
+// const client = new DynamoDBClient({region: 'ap-southeast-1'}); 
+const db = new DynamoDB({region: 'ap-southeast-1'}); 
 
-module.exports.get = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const get = async (event: APIGatewayProxyEvent):Promise<APIGatewayProxyResult> => {
+    console.log(event.pathParameters?.userId)
     const params = {
-        TableName: "firstDynamo",
+        TableName: "firstDyno",
         Key: marshall({
             id: event.pathParameters?.userId
         })
     }; 
 
+
+
+
     try {
-         data = await client.send(new GetItemCommand(params)); 
-      } catch (err) {
-        console.error(err);
-      }
-    return{
-        statusCode: 200,
-        body: JSON.stringify(`Here is your user data: ${data}`)
-    }; 
+        const data = await db.getItem(params)
+        console.log('data', data, data?.Item)
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data?.Item)
+        }
+    } catch (err) {
+        console.log(err)
+        return err;
+    }
+    
 };
