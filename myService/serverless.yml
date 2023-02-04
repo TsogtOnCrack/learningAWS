@@ -74,23 +74,42 @@ functions:
   #         method: get
 
   CreatingANewUser: 
-    handler: ./src/createUser.create
+    handler: ./src/user/createUser.create
     events: 
       - http:
           path: /create/{userId}/{userName}/{age}
           method: post
   GetSpecificUser:
-    handler: ./src/getUser.get
+    handler: ./src/user/getUser.get
     events:
       - http:
           path: /user/{userId}
           method: get
   UpdateAUser:
-    handler: ./src/updateUser.update
+    handler: ./src/user/updateUser.update
     events:
       - http:
           path: /update/{id}
-          method: get
+          method: post
+  DeleteUser:
+    handler: ./src/user/deleteUser.deleteUser
+    events:
+      - http:
+          path: /delete/{id}
+          method: delete
+
+  CreatePost:
+    handler: ./src/post/createPost.makePost
+    events: 
+      - http:
+          path: /makepost/{id}/{author}/{title}
+          method: post
+  EditPost:
+    handler: ./src/post/editPost.editPost
+    events:
+      - http:
+          path: /editpost/{id}/{tochange}/{changevalue}
+          method : post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
